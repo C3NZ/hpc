@@ -13,6 +13,9 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(BUILD_TESTING OFF)
+
+project(app)
 
 file(
     GLOB_RECURSE
@@ -21,7 +24,8 @@ file(
     ${CMAKE_SOURCE_DIR}/src/*.cpp
 )
 
-add_subdirectory(${CMAKE_COURSE_DIR}/vendor/Vc)
+add_executable(app ${APP_SOURCE})
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
 target_link_libraries(app Vc)
 
-add_executable(app ${APP_SOURCE})
