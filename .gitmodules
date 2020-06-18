@@ -1,0 +1,3 @@
+[submodule "vendor/Vc"]
+	path = vendor/Vc
+	url = github:VcDevel/Vc
