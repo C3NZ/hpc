@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <Vc/Vc>
 
+// Retrieves the CPU brand by executing configuring %eax to a specific register
+// and then running the cpuid program.
 std::string GetCPUName() {
   int data[3] = { 0 };
 
@@ -20,6 +22,8 @@ std::string GetCPUName() {
   return std::string(reinterpret_cast<const char*>(data));
 }
 
+// Multiply two float arrays using SIMD extensions. Each of the float arrays
+// are packed into 128 bit registers and then multiplied in parallel.
 void MultiplyWithSIMDAssembly() {
   float f1[] = { 1.f, 2.f, 3.f, 4.f };
   float f2[] = { 5.f, 4.f, 3.f, 2.f };
@@ -40,6 +44,8 @@ void MultiplyWithSIMDAssembly() {
   }
 }
 
+// This is doing the same set of operations that were done in the previous 
+// function with inline assembly.
 void MultiplyWithIntrinsics() {
   float f1[] = { 1.f, 2.f, 3.f, 4.f };
   float f2[] = { 5.f, 4.f, 3.f, 2.f };
@@ -50,7 +56,6 @@ void MultiplyWithIntrinsics() {
   Vc::float_v result = vec1 * vec2;
 
   std::cout << result << std::endl;
-
 }
 
 void assembler() {
