@@ -1,7 +1,8 @@
 Release
 Debug
 Dist
-
+.clangd
+.git
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,cmake,cpp,c,assembly,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,cmake,cpp,c,assembly,linux
