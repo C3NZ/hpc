@@ -29,13 +29,20 @@ file(
 
 add_executable(app ${APP_SOURCE})
 
+target_compile_options(
+    app
+    PUBLIC -mfpmath=sse
+    PUBLIC -mmmx
+    PUBLIC -msse
+    PUBLIC -msse2
+)
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
+target_link_libraries(app Vc)
+
 target_include_directories(
     app
     PUBLIC ${Vc_INCLUDE_DIR}
 )
-
-add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
-
-target_link_libraries(app Vc)
 
 
