@@ -10,6 +10,8 @@ elseif (${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/bin)
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -24,8 +26,16 @@ file(
     ${CMAKE_SOURCE_DIR}/src/*.cpp
 )
 
+
 add_executable(app ${APP_SOURCE})
 
+target_include_directories(
+    app
+    PUBLIC ${Vc_INCLUDE_DIR}
+)
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
+
 target_link_libraries(app Vc)
+
 
