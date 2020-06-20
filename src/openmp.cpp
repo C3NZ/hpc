@@ -90,6 +90,7 @@ void OpenMPSync() {
 
   #pragma omp parallel for num_threads(128)
   for (int i = 0; i < 100; ++i) {
+    #pragma omp atomic
     ++sum;
   }
 
@@ -98,9 +99,10 @@ void OpenMPSync() {
 
 
 void RunOpenMPExamples() {
-  HelloOpenMP();
-  OpenMPIterate();
-  OpenMPSections();
+ // HelloOpenMP();
+ // OpenMPIterate();
+ // OpenMPSections();
+  omp_set_num_threads(8);
   OpenMPSingleMaster();
   OpenMPSync();
 }
