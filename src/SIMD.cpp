@@ -67,5 +67,6 @@ void assembler() {
 }
 
 int main(int argc, char* argv[]) {
-  HelloOpenMP();
+  // assembler();
+  RunOpenMPExamples();
 }
