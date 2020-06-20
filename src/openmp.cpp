@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <chrono>
+#include <vector>
 
 #include <omp.h>
 
@@ -68,17 +69,16 @@ void OpenMPSingleMaster() {
   {
     #pragma omp single 
     {
-      std::printf("Gathering input on thread: %d\n", omp_get_thread_num());
+      printf("Gathering input on thread: %d\n", omp_get_thread_num());
     }
 
-    std::printf(
-        "Parallel process happening on thread: %d\n", omp_get_thread_num());
+    printf("Parallel process happening on thread: %d\n", omp_get_thread_num());
 
     #pragma omp barrier
 
     #pragma omp master 
     {
-      std::printf("Printing output on thread: %d\n", omp_get_thread_num());
+      printf("Printing output on thread: %d\n", omp_get_thread_num());
     }
   }
 }
@@ -94,7 +94,22 @@ void OpenMPSync() {
     ++sum;
   }
 
-  std::cout << sum;
+  printf("%d\n", sum);
+  std::vector<int> vec;
+
+  #pragma omp parallel for ordered
+  for (int i = 0; i < 20; ++i) {
+    printf("%d : %d\n", omp_get_thread_num(), i);
+    int j = i * i;
+
+    #pragma omp ordered
+    vec.push_back(j);
+  }
+
+  printf("\n");
+  for (auto v : vec) {
+    printf("%d\t", v);
+  }
 }
 
 
