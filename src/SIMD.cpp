@@ -3,6 +3,8 @@
 #include <cstdio>
 #include <Vc/Vc>
 
+#include "openmp.h"
+
 // Retrieves the CPU brand by executing configuring %eax to a specific register
 // and then running the cpuid program.
 std::string GetCPUName() {
@@ -65,5 +67,5 @@ void assembler() {
 }
 
 int main(int argc, char* argv[]) {
-  assembler();
+  HelloOpenMP();
 }
