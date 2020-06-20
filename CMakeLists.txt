@@ -40,6 +40,9 @@ target_compile_options(
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
 target_link_libraries(app Vc)
 
+find_package(OpenMP REQUIRED)
+target_link_libraries(app OpenMP::OpenMP_CXX)
+
 target_include_directories(
     app
     PUBLIC ${Vc_INCLUDE_DIR}
