@@ -36,7 +36,6 @@ target_compile_options(
     PUBLIC -msse
     PUBLIC -msse2
     PRIVATE -Wall 
-    PUBLIC -fopenmp
     ${OpenMP_CXX_FLAGS}
 )
 
