@@ -5,6 +5,7 @@ void HelloOpenMP();
 void OpenMPIterate();
 void OpenMPSections();
 void OpenMPSingleMaster();
+void OpenMPDataSharing();
 void RunOpenMPExamples();
 
 #endif  // SRC_OPENMP_H_

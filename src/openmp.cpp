@@ -112,12 +112,25 @@ void OpenMPSync() {
   }
 }
 
+void OpenMPDataSharing() {
+  int i = 10;
+
+  #pragma omp parallel for private(i)
+  for (int a = 0; a < 10; ++a) {
+    printf("thread %d i = %d\n", omp_get_thread_num(), i);
+    i = 1000 + omp_get_thread_num();
+  }
+
+  printf("%d\n", i);
+}
 
 void RunOpenMPExamples() {
- // HelloOpenMP();
- // OpenMPIterate();
- // OpenMPSections();
+  // HelloOpenMP();
+  // OpenMPIterate();
+  // OpenMPSections();
   omp_set_num_threads(8);
-  OpenMPSingleMaster();
-  OpenMPSync();
+  // OpenMPSingleMaster();
+  // OpenMPSync();
+  OpenMPDataSharing();
+
 }
