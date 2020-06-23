@@ -44,7 +44,11 @@ target_link_libraries(app PUBLIC Vc)
 
 find_package(OpenMP REQUIRED)
 find_package(MPI REQUIRED)
-find_package(Boost REQUIRED COMPONENTS serialization)
+find_package(
+    Boost 
+    REQUIRED 
+    COMPONENTS serialization mpi
+)
 
 if(NOT Boost_FOUND)
     message(FATAL_ERROR "Boost Not found")
