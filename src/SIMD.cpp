@@ -4,6 +4,7 @@
 #include <Vc/Vc>
 
 #include "openmp.h"
+#include "mpitest.h"
 
 // Retrieves the CPU brand by executing configuring %eax to a specific register
 // and then running the cpuid program.
@@ -68,5 +69,6 @@ void assembler() {
 
 int main(int argc, char* argv[]) {
   // assembler();
-  RunOpenMPExamples();
+  // RunOpenMPExamples();
+  HelloMPI(argc, argv);
 }
