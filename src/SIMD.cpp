@@ -70,5 +70,5 @@ void assembler() {
 int main(int argc, char* argv[]) {
   // assembler();
   // RunOpenMPExamples();
-  HelloMPI(argc, argv);
+  RunMPIExamples(argc, argv);
 }
