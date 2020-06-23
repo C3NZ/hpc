@@ -43,14 +43,23 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/Vc)
 target_link_libraries(app PUBLIC Vc)
 
 find_package(OpenMP REQUIRED)
-target_link_libraries(app PUBLIC OpenMP::OpenMP_CXX)
-
 find_package(MPI REQUIRED)
-target_link_libraries(app PUBLIC ${MPI_CXX_LIBRARIES})
+find_package(Boost REQUIRED COMPONENTS serialization)
+
+if(NOT Boost_FOUND)
+    message(FATAL_ERROR "Boost Not found")
+endif()
+
+target_link_libraries(
+    app 
+    PUBLIC OpenMP::OpenMP_CXX
+    PUBLIC ${MPI_CXX_LIBRARIES}
+    PRIVATE ${Boost_LIBRARIES}
+)
 
 target_include_directories(
     app
     PUBLIC ${Vc_INCLUDE_DIR}
     PUBLIC ${MPI_INCLUDE_PATH}
-
+    PUBLIC ${Boost_INCLUDE_DIR}
 )
