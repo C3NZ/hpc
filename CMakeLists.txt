@@ -45,8 +45,12 @@ target_link_libraries(app PUBLIC Vc)
 find_package(OpenMP REQUIRED)
 target_link_libraries(app PUBLIC OpenMP::OpenMP_CXX)
 
+find_package(MPI REQUIRED)
+target_link_libraries(app PUBLIC ${MPI_CXX_LIBRARIES})
+
 target_include_directories(
     app
     PUBLIC ${Vc_INCLUDE_DIR}
+    PUBLIC ${MPI_INCLUDE_PATH}
 
 )
