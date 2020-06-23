@@ -9,6 +9,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/serialization.hpp>
+#include <boost/mpi.hpp>
 
 // Setups MPI and allows single binaries to be run in parallel of one another.
 void HelloMPI(int argc, char* argv[]) {
@@ -79,19 +80,20 @@ void MPIWithObjects(int argc, char* argv[]) {
   } else {
     MPI_Status status;
 
+    // Probe data until it's received and then get the size of incoming data.
     MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
     int count;
     MPI_Get_count(&status, MPI_CHAR, &count);
-
     std::cout << "We have received " << count << " bytes" << std::endl;
-    char* buffer  = new char[count];
 
+    // Knowing the size of buffer,read it into memory.
+    char* buffer  = new char[count];
     MPI_Recv(buffer, count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, &status);
     std::cout << "We received our buffer: " << buffer << std::endl;
 
+    // Convert the buffer into an input stream and then deserialize it.
     std::istringstream iss(buffer);
     boost::archive::text_iarchive archive(iss);
-
     Person p;
     archive >> p;
 
@@ -109,7 +111,31 @@ void MPIWithObjects(int argc, char* argv[]) {
   MPI_Finalize();
 }
 
+void MPIWithBoost(int argc, char* argv[]) {
+
+  namespace mpi = boost::mpi;
+
+  mpi::environment env;
+  mpi::communicator world;
+
+  if (world.rank() == 0) {
+    Person p;
+    p.name = "Yeeter";
+    p.age = 2300;
+
+    for (int i = 1; i < world.size(); i++) {
+      world.send(i, 0, p);
+    }
+  } else {
+    Person p;
+    world.recv(0, 0, p);
+    std::cout 
+      << p.name << " is my name and I'm " << p.age << " years old" << std::endl;
+  }
+}
+
 void RunMPIExamples(int argc, char* argv[]) {
   // HelloMPI(argc, argv);
-  MPIWithObjects(argc, argv);
+  // MPIWithObjects(argc, argv);
+  MPIWithBoost(argc, argv);
 }
