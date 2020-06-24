@@ -134,6 +134,28 @@ void MPIWithBoost(int argc, char* argv[]) {
   }
 }
 
+void DifferentMPISends(int argc, char* argv[]) {
+  MPI_Init(&argc, &argv);
+  
+  int size, rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  if (rank == 0) {
+    int value = 42;
+    for (int i = 1; i < size; i++) {
+      std::cout << "Ready to send from " << rank << " --> " << i << std::endl;
+      MPI_Ssend(&value, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+    }
+  } else {
+    int received;
+    MPI_Recv(&received, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+  }
+
+
+  MPI_Finalize();
+}
+
 void RunMPIExamples(int argc, char* argv[]) {
   // HelloMPI(argc, argv);
   // MPIWithObjects(argc, argv);
